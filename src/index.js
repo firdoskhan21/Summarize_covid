@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const { routes: useRoutes, } = require("./covid_info/routes");
+const { routes: useRoutes, } = require("./routes/covid_info.routes");
 
 const app = express();
 app.use(cors());
