@@ -7,7 +7,8 @@ Node JS API for fetching data on Covid - 19 worldwide.
 
 `npm install`
 
-"Make sure you install serverless offline globally in your system(if any serverless error is observed)"
+**Make sure you install serverless offline globally in your system(if any serverless error is observed)**
+
 After successfull installation of serverless offline is done, now its time to run the project.
 
 `sls offline` or
@@ -16,4 +17,6 @@ After successfull installation of serverless offline is done, now its time to ru
 
 the base api url for the offline api would be at your localhost:3000 
 
-API documentation:
+Full API documentation can be found here:
+
+"[https://documenter.getpostman.com/view/7663594/2s8YswRXZa]"

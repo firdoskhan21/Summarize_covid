@@ -15,10 +15,6 @@ functions:
     handler: handler.handler
     events:
       - http:
-          path: /
-          method: get
-          cors: true
-      - http:
           path: /{proxy+}
-          method: any
+          method: get
           cors: true
