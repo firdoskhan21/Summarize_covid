@@ -19,4 +19,4 @@ the base api url for the offline api would be at your localhost:3000
 
 Full API documentation can be found here:
 
-"[https://documenter.getpostman.com/view/7663594/2s8YswRXZa]"
+[https://documenter.getpostman.com/view/7663594/2s8YswRXZa](Summarize Covid API documentation)
