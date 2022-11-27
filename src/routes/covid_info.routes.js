@@ -25,27 +25,21 @@ routes.get('/covid_info/:id/:type', (req, res) => {
     var queryStr = '/' + req.params.id + '/' + req.params.type;
     if (req.query.lastdays !== undefined) {
         queryStr += '?lastdays=' + req.query.lastdays
+    } else if (req.query.cases !== undefined || req.query.deaths !== undefined) {
+        queryStr = '/all'
     }
     var temp = disease.getCovidDetails(queryStr);
     temp.then((response, err) => {
+        if (req.query.cases !== undefined || req.query.deaths !== undefined) {
+            var formatData = req.query.cases === 'all' ? { cases: JSON.parse(response).cases } : req.query.cases === 'today' ? { todayCases: JSON.parse(response).todayCases } : req.query.deaths === 'all' ? { deaths: JSON.parse(response).deaths } : req.query.deaths === 'today' ? { todayDeaths: JSON.parse(response).todayDeaths } : {}
+        }
         res.status(200).json({
             status: 'success', data:
-
-
-                JSON.parse(response)
+                req.query.cases !== undefined || req.query.deaths !== undefined ? formatData :
+                    JSON.parse(response)
         });
     })
 });
-
-// route for getting summarize information of specified country
-// routes.get('/covid_info/country_overview/:id', (req, res) => {
-//     var queryStr = '/countries/' + req.params.id;
-//     var temp = disease.getCovidDetails(queryStr);
-//     temp.then((response, err) => {
-//         console.log(err)
-//         res.status(200).json({ status: 'success', data: JSON.parse(response) });
-//     })
-// });
 
 module.exports = {
     routes
