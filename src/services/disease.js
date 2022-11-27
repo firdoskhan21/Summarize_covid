@@ -7,15 +7,19 @@ module.exports.getCovidDetails = async function (params) {
         url: HOST + params,
         method: 'GET',
     };
-    console.log(options)
     // Return api call response as promise
     return new Promise(function (resolve, reject) {
         request.get(options, function (err, resp, body) {
-            if (err) {
-                reject(err);
+            if (err && resp['statusCode'] !== 200) {
+                reject(err !== null ? err : { status: resp['statusCode'], message: resp['statusMessage'] });
             } else {
-                resolve(body);
+                if (resp['statusCode'] == 200)
+                    resolve({ status: resp['statusCode'], data: JSON.parse(body) });
+                else
+                    resolve({ status: resp['statusCode'], data: body })
             }
         })
-    })
+    }).catch(function (error) {
+        throw error
+    });
 };

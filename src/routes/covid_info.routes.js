@@ -20,7 +20,7 @@ routes.get('/healthcheck', async (_req, res, _next) => {
     }
 });
 
-// route for getting historical data of all and specific countries
+// route for getting historical data of all and specific countries along with cases and death records
 routes.get('/covid_info/:id/:type', (req, res) => {
     var queryStr = '/' + req.params.id + '/' + req.params.type;
     if (req.query.lastdays !== undefined) {
@@ -31,12 +31,12 @@ routes.get('/covid_info/:id/:type', (req, res) => {
     var temp = disease.getCovidDetails(queryStr);
     temp.then((response, err) => {
         if (req.query.cases !== undefined || req.query.deaths !== undefined) {
-            var formatData = req.query.cases === 'all' ? { cases: JSON.parse(response).cases } : req.query.cases === 'today' ? { todayCases: JSON.parse(response).todayCases } : req.query.deaths === 'all' ? { deaths: JSON.parse(response).deaths } : req.query.deaths === 'today' ? { todayDeaths: JSON.parse(response).todayDeaths } : {}
+            var formatData = req.query.cases === 'all' ? { cases: response.data.cases } : req.query.cases === 'today' ? { todayCases: response.data.todayCases } : req.query.deaths === 'all' ? { deaths: response.data.deaths } : req.query.deaths === 'today' ? { todayDeaths: response.data.todayDeaths } : {}
         }
-        res.status(200).json({
-            status: 'success', data:
+        res.status(response.status == 200 ? 200 : response.status).json({
+            status: response.status == 200 ? 'success' : 'error', data:
                 req.query.cases !== undefined || req.query.deaths !== undefined ? formatData :
-                    JSON.parse(response)
+                    response
         });
     })
 });
